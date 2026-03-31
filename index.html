@@ -4724,7 +4724,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     updateMagicText();
     window.addEventListener('resize', function() { _magicDocTop = null; updateMagicText(); }, { passive: true });
 
-    if (window.innerWidth <= 900) {
+    // Disabled mobile touch-lock: it intercepted touchmove and forced
+    // position:fixed on <body>, causing scroll to be blocked / snap back.
+    // Re-enable only if we need the touch-driven animation again.
+    if (window.innerWidth <= 900 && false) {
       /* Simple lock: the moment scroll reaches the section, freeze the page.
          Text is already centered (sticky top:50%). Touch then drives the
          animation only. When done, unlock and resume natural scroll. */
