@@ -5351,27 +5351,44 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- ===== FAQ ACCORDION JS ===== -->
   <script>
   (function() {
-    // Use event delegation — attach once, no inline onclick needed
-    document.addEventListener('click', function(e) {
-      var btn = e.target.closest('.faq-acc-q');
-      if (!btn) return;
-      e.stopPropagation();
+      // Use event delegation — measure content height and animate via inline max-height
+      document.addEventListener('click', function(e) {
+        var btn = e.target.closest('.faq-acc-q');
+        if (!btn) return;
+        e.stopPropagation();
 
-      var item = btn.closest('.faq-acc-item');
-      var isOpen = item.classList.contains('open');
+        var item = btn.closest('.faq-acc-item');
+        if (!item) return;
+        var isOpen = item.classList.contains('open');
 
-      // Close all open items
-      document.querySelectorAll('.faq-acc-item.open').forEach(function(el) {
-        el.classList.remove('open');
-        el.querySelector('.faq-acc-q').setAttribute('aria-expanded', 'false');
+        // Close other open items and collapse their bodies
+        document.querySelectorAll('.faq-acc-item.open').forEach(function(el) {
+          if (el === item) return;
+          el.classList.remove('open');
+          var q = el.querySelector('.faq-acc-q'); if (q) q.setAttribute('aria-expanded', 'false');
+          var b = el.querySelector('.faq-acc-body'); if (b) b.style.maxHeight = '0px';
+        });
+
+        var body = item.querySelector('.faq-acc-body');
+        if (!isOpen) {
+          // Open: set class, aria and animate to measured height
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+          if (body) {
+            // allow browser to compute layout before measuring (safety rAF)
+            requestAnimationFrame(function() {
+              body.style.maxHeight = body.scrollHeight + 'px';
+            });
+          }
+          // Remove focus to avoid browser trying to bring the button into view
+          try { btn.blur(); } catch (err) {}
+        } else {
+          // Close: remove class and collapse body
+          item.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+          if (body) body.style.maxHeight = '0px';
+        }
       });
-
-      // Toggle clicked item
-      if (!isOpen) {
-        item.classList.add('open');
-        btn.setAttribute('aria-expanded', 'true');
-      }
-    });
   })();
   </script>
 
