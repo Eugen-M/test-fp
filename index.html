@@ -3074,7 +3074,7 @@
     /* Allow halo glow to extend beyond card boundary on mobile */
     .mtr-card-inner { overflow: visible !important; }
     /* Collapse vertical tabs → 2-column grid on mobile */
-    .mtr-tabs { display: grid !important; grid-template-columns: 1fr 1fr !important; margin-top: 0 !important; }
+    .mtr-tabs { display: grid !important; grid-template-columns: 1fr 1fr !important; margin-top: 20px !important; }
     .mtr-tab-label { display: none !important; }
     .mtr-tab-body { display: none !important; }
     .mtr-tab.active .mtr-tab-body { display: block !important; max-height: none !important; opacity: 1 !important; margin-top: 6px !important; font-size: 11px !important; }
@@ -4240,9 +4240,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       link.addEventListener('touchstart', function() {}, { passive: true });
       link.addEventListener('touchend', function(e) {
         e.preventDefault();
-        // var hash = link.getAttribute('href');
-        // console.log(window._bypassMagicLock )
-        // if (window._bypassMagicLock) window._bypassMagicLock();
 
         var hash = link.getAttribute('href');
         var target = document.querySelector(hash);
@@ -4251,13 +4248,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         closeMobileMenu();
 
         scrollStable(target, 68);
-        // clearTimeout(menuNavTimer);
-        // menuNavTimer = setTimeout(function() {
-        //   var target = document.querySelector(hash);
-        //   if (!target) return;
-        //   var top = getDocTop(target) - 68;
-        //   window.scrollTo(0, Math.max(0, top));
-        // }, 200);
       });
     });
 
