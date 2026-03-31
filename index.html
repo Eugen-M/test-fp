@@ -5375,6 +5375,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       if (!isOpen) {
         item.classList.add('open');
         btn.setAttribute('aria-expanded', 'true');
+        if (body) {
+          // animate to measured height, then remove inline maxHeight so content can grow
+          body.style.maxHeight = body.scrollHeight + 'px';
+          function onEnd(e) {
+            if (e.propertyName === 'max-height') {
+              body.style.maxHeight = '';
+              body.removeEventListener('transitionend', onEnd);
+            }
+          }
+          body.addEventListener('transitionend', onEnd);
+        }
+        try { btn.blur(); } catch (err) {}
+      } else {
+        item.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        if (body) {
+          // animate from current height -> 0
+          body.style.maxHeight = body.scrollHeight + 'px';
+          requestAnimationFrame(function() { body.style.maxHeight = '0px'; });
+        }
       }
     });
   })();
