@@ -2957,7 +2957,7 @@
     .hero-mockup-wrap { width: 40% !important; right: 3% !important; }
   }
 
-  @media (min-width: 880px) and (max-width: 1280px) {
+  @media (min-width: 920px) and (max-width: 1280px) {
     .hero-mockup-wrap {
       height: 100%;
       top: 0;
@@ -2974,7 +2974,7 @@
     }
   }
 
-  @media (min-width: 768px) and (max-width: 880px) {
+  @media (min-width: 768px) and (max-width: 920px) {
     .hero-mockup-wrap {
       height: 100%;
       top: 0;
@@ -3002,9 +3002,9 @@
     /* #goals-scroll { height: 150vh !important; } */
   }
   @media (max-width: 767px) {
-    /* 150svh = stable vh — no iOS toolbar jump. Gives enough pin range for 33
-       words (~14px/word at 80%) without leaving a full screen of empty space. */
-    #magic-text-section { height: 110svh !important; }
+    /* 200svh on mobile too — gives enough scroll distance for smooth underline animation.
+       Without this, the animation plays too fast (110svh only = 10svh scroll range). */
+    #magic-text-section { height: 200svh !important; }
     /* Push text down by half the nav height so it sits in the visible center,
        not behind the fixed nav bar */
     #magic-text-wrap { top: calc(50% + 44px) !important; }
@@ -4221,13 +4221,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       link.addEventListener('touchend', function(e) {
         e.preventDefault();
         var hash = link.getAttribute('href');
+        var target = document.querySelector(hash);
+        if (!target) {
+          closeMobileMenu();
+          return;
+        }
+        var top = getDocTop(target) - 68;
         if (window._bypassMagicLock) window._bypassMagicLock();
         closeMobileMenu();
         clearTimeout(menuNavTimer);
         menuNavTimer = setTimeout(function() {
-          var target = document.querySelector(hash);
-          if (!target) return;
-          var top = getDocTop(target) - 68;
           window.scrollTo(0, Math.max(0, top));
         }, 200);
       });
