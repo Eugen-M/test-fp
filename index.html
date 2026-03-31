@@ -2446,7 +2446,7 @@
   }
   .mtr-phone-wrap {
     position: relative; z-index: 1;
-    width: 248px; height: 456px;
+    width: 270px; height: 560px;
     filter:
       drop-shadow(0 0 38px rgba(74,128,228,0.62))
       drop-shadow(0 0 72px rgba(52,100,220,0.30))
@@ -2955,6 +2955,32 @@
     .hero-split { padding: 0 48px 0 60px !important; }
     .hero-text { max-width: 420px !important; }
     .hero-mockup-wrap { width: 40% !important; right: 3% !important; }
+  }
+
+  @media (min-width: 880px) and (max-width: 1023px) {
+    .hero-mockup-wrap {
+      height: 100%;
+      top: 0;
+      left: inherit !important;
+      right: 0 !important;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 50%;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 880px) {
+    .hero-mockup-wrap {
+      height: 100%;
+      top: 0;
+      left: inherit !important;
+      right: 0 !important;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 35%;
+    }
   }
 
   /* ─── 3. MAGIC TEXT SECTION ──────────────────────────────────── */
@@ -5375,26 +5401,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       if (!isOpen) {
         item.classList.add('open');
         btn.setAttribute('aria-expanded', 'true');
-        if (body) {
-          // animate to measured height, then remove inline maxHeight so content can grow
-          body.style.maxHeight = body.scrollHeight + 'px';
-          function onEnd(e) {
-            if (e.propertyName === 'max-height') {
-              body.style.maxHeight = '';
-              body.removeEventListener('transitionend', onEnd);
-            }
-          }
-          body.addEventListener('transitionend', onEnd);
-        }
-        try { btn.blur(); } catch (err) {}
-      } else {
-        item.classList.remove('open');
-        btn.setAttribute('aria-expanded', 'false');
-        if (body) {
-          // animate from current height -> 0
-          body.style.maxHeight = body.scrollHeight + 'px';
-          requestAnimationFrame(function() { body.style.maxHeight = '0px'; });
-        }
       }
     });
   })();
