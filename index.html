@@ -4210,9 +4210,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     // regardless of CSS scroll-behavior, so it cannot be silently skipped.
 
     function getDocTop(el) {
-      var y = 0;
-      while (el) { y += (el.offsetTop || 0); el = el.offsetParent; }
-      return y;
+      var rect = el.getBoundingClientRect();
+      return rect.top + window.pageYOffset;
     }
 
     var menuNavTimer = null;
