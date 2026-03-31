@@ -806,7 +806,11 @@
     .faq-acc-body {
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.36s cubic-bezier(0.4,0,0.2,1);
+    }
+    @media (hover: hover) {
+      .faq-acc-body {
+        transition: max-height 0.36s cubic-bezier(0.4,0,0.2,1);
+      }
     }
     .faq-acc-item.open .faq-acc-body {
       max-height: 600px;
