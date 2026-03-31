@@ -4227,15 +4227,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         menuNavTimer = setTimeout(function() {
           var target = document.querySelector(hash);
           if (!target) return;
-          /* iOS Safari: use scrollIntoView with block:'start' instead of window.scrollTo()
-             This respects scroll-margin-top and works better with animated toolbar */
-          target.scrollIntoView({ behavior: 'auto', block: 'start' });
-          /* Fallback for older Safari: manual scroll adjustment */
-          setTimeout(function() {
-            var top = getDocTop(target) - 68;
-            window.scrollBy(0, Math.max(0, top - window.scrollY));
-          }, 50);
-        }, 350);
+          var top = getDocTop(target) - 68;
+          window.scrollTo(0, Math.max(0, top));
+        }, 200);
       });
     });
 
@@ -4252,12 +4246,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       menuNavTimer = setTimeout(function() {
         var target = document.querySelector(hash);
         if (!target) return;
-        target.scrollIntoView({ behavior: 'auto', block: 'start' });
-        setTimeout(function() {
-          var top = getDocTop(target) - 68;
-          window.scrollBy(0, Math.max(0, top - window.scrollY));
-        }, 50);
-      }, 350);
+        var top = getDocTop(target) - 68;
+        window.scrollTo(0, Math.max(0, top));
       }, 200);
     });
 
